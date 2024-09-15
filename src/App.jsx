@@ -55,11 +55,29 @@ Bu şirket çalışanlarını gözetlemek istiyor. Göreviniz aşağıdakileri y
        
        4. Yalnızca aşağıdaki kodu yazmanız gerekir. Yukarıdaki veya projenin başka bir yerindeki kodların hiçbirinin değiştirilmesi gerekmiyor.
 */
+const handleChange=(e)=>{
+  const inputValue=e.target.value
+  const newReport={
+    timeStamp: getTimeStamp(), // zamanı alıyoruz
+    employeeInput: inputValue, // kullanıcının girdiği metin
+    infractionDetected: inputValue.includes('Evil Corp.'), // 'Evil Corp.' varsa true döner
+  }
+  setUserInput(inputValue)
+
+  setTrackingReports(prev=>[...prev,newReport])
+
+  if (inputValue.includes('Evil Corp.')) {
+    const correctedInput = inputValue.replace('Evil Corp.', 'Good Corp.')
+    setUserInput(correctedInput)
+  }
+  
+
+}
 
   return (
     <div>
       <Header />
-      <textarea  placeholder='Raporunuzu buraya yazın...' />
+      <textarea  value={userInput} onChange={handleChange} placeholder='Raporunuzu buraya yazın...' />
     </div>
   )
 }
